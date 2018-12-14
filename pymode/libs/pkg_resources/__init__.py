@@ -2170,7 +2170,10 @@ def _handle_ns(packageName, path_item):
         return None
 
     if PY3:
-        loader = importer.find_module(packageName)
+        if hasattr(importer, 'find_module'):
+            loader = importer.find_module(packageName)
+        else:
+            loader = None
     else:
         try:
             loader = importer.find_module(packageName)
